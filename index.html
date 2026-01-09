@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PI Planning Event</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .agenda-item {
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            background: #f8f9ff;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .agenda-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .time {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .activity {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .description {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 30px 0 20px 0;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .day-header:first-child {
+            margin-top: 0;
+        }
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .room-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ebff 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #667eea;
+            transition: all 0.3s;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .room-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .team-list {
+            list-style: none;
+        }
+
+        .team-list li {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #764ba2;
+            font-weight: 500;
+        }
+
+        .capacity {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ccc;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                width: 100%;
+            }
+            
+            .rooms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 PI Planning Event</h1>
+            <p class="subtitle">Q1 2026 Program Increment | January 15-16, 2026</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('agenda')">📅 Agenda</button>
+            <button class="tab" onclick="showTab('rooms')">🏢 Breakout Rooms</button>
+        </div>
+
+        <div class="content">
+            <div id="agenda" class="tab-content active">
+                <div class="day-header">Day 1 - January 15, 2026</div>
+                
+                <div class="agenda-item">
+                    <div class="time">8:00 AM - 8:30 AM</div>
+                    <div class="activity">Registration & Breakfast</div>
+                    <div class="description">Welcome coffee and light breakfast. Network with fellow team members.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">8:30 AM - 9:00 AM</div>
+                    <div class="activity">Business Context</div>
+                    <div class="description">Executive leadership presents current state, market conditions, and business priorities.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">9:00 AM - 10:00 AM</div>
+                    <div class="activity">Product/Solution Vision</div>
+                    <div class="description">Product Management shares the vision and top features for this PI.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">10:00 AM - 10:15 AM</div>
+                    <div class="activity">Architecture Vision & Development Practices</div>
+                    <div class="description">System Architect presents architectural runway and enablers.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">10:15 AM - 10:30 AM</div>
+                    <div class="activity">Break</div>
+                    <div class="description">Coffee break and informal discussions.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">10:30 AM - 12:30 PM</div>
+                    <div class="activity">Team Breakout #1</div>
+                    <div class="description">Teams begin planning their iterations in breakout rooms.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">12:30 PM - 1:30 PM</div>
+                    <div class="activity">Lunch</div>
+                    <div class="description">Catered lunch provided.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">1:30 PM - 4:00 PM</div>
+                    <div class="activity">Team Breakout #2</div>
+                    <div class="description">Continue iteration planning and identify dependencies.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">4:00 PM - 4:30 PM</div>
+                    <div class="activity">Draft Plan Review</div>
+                    <div class="description">Teams present draft plans and program board is updated.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">4:30 PM - 5:00 PM</div>
+                    <div class="activity">Management Review & Problem Solving</div>
+                    <div class="description">Address risks, dependencies, and issues identified during planning.</div>
+                </div>
+
+                <div class="day-header">Day 2 - January 16, 2026</div>
+
+                <div class="agenda-item">
+                    <div class="time">8:00 AM - 8:30 AM</div>
+                    <div class="activity">Arrive & Coffee</div>
+                    <div class="description">Morning coffee and preparation for Day 2.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">8:30 AM - 10:30 AM</div>
+                    <div class="activity">Team Breakout #3</div>
+                    <div class="description">Finalize iteration plans and refine objectives.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">10:30 AM - 10:45 AM</div>
+                    <div class="activity">Break</div>
+                    <div class="description">Quick break before final planning.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">10:45 AM - 12:00 PM</div>
+                    <div class="activity">Final Plan Review</div>
+                    <div class="description">Teams present final iteration plans and PI objectives.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">12:00 PM - 1:00 PM</div>
+                    <div class="activity">Lunch</div>
+                    <div class="description">Final lunch together as an ART.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">1:00 PM - 2:00 PM</div>
+                    <div class="activity">Program Risks Review (ROAM)</div>
+                    <div class="description">Identify and categorize risks: Resolved, Owned, Accepted, or Mitigated.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">2:00 PM - 3:00 PM</div>
+                    <div class="activity">PI Confidence Vote & Planning Retrospective</div>
+                    <div class="description">Teams vote on confidence in meeting PI objectives. Conduct quick retrospective on the planning event.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">3:00 PM - 3:30 PM</div>
+                    <div class="activity">Plan Rework (if needed)</div>
+                    <div class="description">Address any concerns from confidence vote.</div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="time">3:30 PM - 4:00 PM</div>
+                    <div class="activity">Closing & Next Steps</div>
+                    <div class="description">Final remarks from leadership and celebration of commitment.</div>
+                </div>
+            </div>
+
+            <div id="rooms" class="tab-content">
+                <div class="rooms-grid">
+                    <div class="room-card">
+                        <div class="room-name">🟦 Blue Room (Conference A)</div>
+                        <ul class="team-list">
+                            <li>Team Phoenix</li>
+                            <li>Team Atlas</li>
+                        </ul>
+                        <div class="capacity">Capacity: 20 people | Floor 2</div>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-name">🟩 Green Room (Conference B)</div>
+                        <ul class="team-list">
+                            <li>Team Nexus</li>
+                            <li>Team Velocity</li>
+                        </ul>
+                        <div class="capacity">Capacity: 20 people | Floor 2</div>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-name">🟧 Orange Room (Conference C)</div>
+                        <ul class="team-list">
+                            <li>Team Catalyst</li>
+                            <li>Team Horizon</li>
+                        </ul>
+                        <div class="capacity">Capacity: 18 people | Floor 3</div>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-name">🟪 Purple Room (Conference D)</div>
+                        <ul class="team-list">
+                            <li>Team Synergy</li>
+                            <li>Team Momentum</li>
+                        </ul>
+                        <div class="capacity">Capacity: 18 people | Floor 3</div>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-name">🟥 Red Room (Training Room 1)</div>
+                        <ul class="team-list">
+                            <li>Team Quantum</li>
+                            <li>Team Apex</li>
+                        </ul>
+                        <div class="capacity">Capacity: 25 people | Floor 1</div>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-name">🟨 Yellow Room (Training Room 2)</div>
+                        <ul class="team-list">
+                            <li>Team Summit</li>
+                            <li>Team Fusion</li>
+                        </ul>
+                        <div class="capacity">Capacity: 25 people | Floor 1</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+    </script>
+</body>
+</html>
